@@ -2,11 +2,15 @@
 
 namespace App\Service;
 
-use App\Entity\Ruleset;
 
 class DuelService
 {
-    public function iterate(Ruleset $ruleset): array
+    /**
+     * Iterate through the 10 rounds of the duel and return the choices made by each strategy
+     * @param array $strategies Array of Strategy objects
+     * @return array Array containing the choices made by the strategies in each iteration of the duel
+     */
+    public function iterate(array $strategies): array
     {
         // Initialize choices array
         $choices = [
@@ -16,10 +20,10 @@ class DuelService
         // Duel iteration
         for ($i = 0; $i < 10; $i++) {
             // Check for strategy choice change
-            foreach ($ruleset->getStrategies() as $key => $strategy) {
+            foreach ($strategies as $key => $strategy) {
                 if ($strategy->isThinking() && $i != 0) {
                     // Get previous choices for the opposing strategy
-                    $opposingKey = ($key == 0) ? 1 : 0;
+                    $opposingKey     = ($key == 0) ? 1 : 0;
                     $previousChoices = $choices["strategy$opposingKey"];
                     // Apply the opposing strategy's choices to the current strategy
                     $strategy->choice($previousChoices);
@@ -29,5 +33,40 @@ class DuelService
             }
         }
         return $choices;
+    }
+
+    /**
+     * Evaluate the outcome of the duel and return the total scores for each strategy
+     * @param mixed $choices Array containing the choices made by the strategies in each iteration of the duel
+     * @return array Total scores for each strategy in the duel
+     */
+    public function evaluate($choices): array
+    {
+        $scores = [
+            'strategy0' => 0,
+            'strategy1' => 0,
+        ];
+        for ($i = 0; $i < count($choices['strategy0']); $i++) {
+            $choice0 = $choices['strategy0'][$i];
+            $choice1 = $choices['strategy1'][$i];
+
+            // If both strategy chose to collaborate
+            if ($choice0 == $choice1 && $choice0 == true) {
+                $scores['strategy0'] += 3;
+                $scores['strategy1'] += 3;
+                // If both strategy chose to resist
+            } elseif ($choice0 == $choice1 && $choice0 == false) {
+                $scores['strategy0'] += 1;
+                $scores['strategy1'] += 1;
+                // If the first strategy chose to collaborate and the second chose to resist
+            } elseif ($choice0 != $choice1) {
+                if ($choice0 == true) {
+                    $scores['strategy1'] += 5;
+                } else {
+                    $scores['strategy0'] += 5;
+                }
+            }
+        }
+        return $scores;
     }
 }

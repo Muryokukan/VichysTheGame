@@ -7,22 +7,23 @@ class Strategy
     private string $name;
     private bool   $choice;
 
-    private bool   $isThinking;
+    private bool $isThinking;
 
+    /**
+     * Method to copy the last choice of an opponent.
+     * @param array $choices Array of boolean values representing choices made by the opponent
+     */
     public function choice(array $choices): void
     {
-        dd($choices);
-        if (isset($choices[-1])) {
-            $this->setChoice($choices[-1]);
-        }
+        $this->setChoice(end($choices));
     }
 
     // Constructor, Getters, and Setters
     public function __construct(string $name, bool $choice, bool $isThinking)
     {
-        $this->name        = $name;
-        $this->choice = $choice;
-        $this->isThinking  = $isThinking;
+        $this->name       = $name;
+        $this->choice     = $choice;
+        $this->isThinking = $isThinking;
     }
 
     public function getName(): string
@@ -30,7 +31,7 @@ class Strategy
         return $this->name;
     }
 
-    public function getchoice(): bool
+    public function getChoice(): bool
     {
         return $this->choice;
     }
@@ -46,7 +47,7 @@ class Strategy
         return $this;
     }
 
-    public function setchoice(bool $choice): static
+    public function setChoice(bool $choice): static
     {
         $this->choice = $choice;
         return $this;

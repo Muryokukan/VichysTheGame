@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Ruleset;
 use App\Entity\Strategy;
 use App\Service\DuelService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,17 +14,29 @@ class HomeController extends AbstractController
     public function index(DuelService $duelService): Response
     {
         // Create two strategies
-        $strategy1 = new Strategy('Strategy 1', true, true);
-        $strategy2 = new Strategy('Strategy 2', false, false);
+        $strategy0 = new Strategy('Collabo', true, true);
+        $strategy1 = new Strategy('Résistant', false, false);
 
-        // Create a ruleset with these strategies
-        $ruleset = new Ruleset([$strategy1, $strategy2]);
-
+        $strategies = [$strategy0, $strategy1];
         // Simulate a duel
-        $result = $duelService->iterate($ruleset);
+        $choices = $duelService->iterate($strategies);
+        $scores  = $duelService->evaluate($choices);
+
+        $results = [];
+        foreach ($strategies as $index => $strategy) {
+            $strategyKey = "strategy$index";
+            $results[]   = [
+                'name'    => $strategy->getName(),
+                'choices' => $choices[$strategyKey],
+                'score'   => $scores[$strategyKey],
+            ];
+        }
+
+        // dd($results);
+
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
-            'duel_result'     => $result,
+            'results'         => $results,
         ]);
     }
 }
