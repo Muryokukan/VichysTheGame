@@ -2,24 +2,22 @@
 
 namespace App\Entity;
 
-class Strategy
+use App\Enum\StrategyChoice;
+
+abstract class Strategy
 {
     private string $name;
-    private bool   $choice;
-
-    private bool $isThinking;
+    private StrategyChoice   $choice;
+    private bool   $isThinking;
 
     /**
      * Method to copy the last choice of an opponent.
-     * @param array $choices Array of boolean values representing choices made by the opponent
+     * @param array $choices Array of StrategyChoice representing choices made by the opponent
      */
-    public function choice(array $choices): void
-    {
-        $this->setChoice(end($choices));
-    }
+    abstract public function choose(array $choices): void;
 
     // Constructor, Getters, and Setters
-    public function __construct(string $name, bool $choice, bool $isThinking)
+    public function __construct(string $name, StrategyChoice $choice, bool $isThinking)
     {
         $this->name       = $name;
         $this->choice     = $choice;
@@ -31,7 +29,7 @@ class Strategy
         return $this->name;
     }
 
-    public function getChoice(): bool
+    public function getChoice(): StrategyChoice
     {
         return $this->choice;
     }
@@ -47,7 +45,7 @@ class Strategy
         return $this;
     }
 
-    public function setChoice(bool $choice): static
+    public function setChoice(StrategyChoice $choice): static
     {
         $this->choice = $choice;
         return $this;

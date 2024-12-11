@@ -2,7 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Strategy;
+use App\Entity\Strategies\Collaborator;
+use App\Entity\Strategies\Undecided;
 use App\Service\DuelService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,8 +15,8 @@ class HomeController extends AbstractController
     public function index(DuelService $duelService): Response
     {
         // Create two strategies
-        $strategy0 = new Strategy('Collabo', true, true);
-        $strategy1 = new Strategy('Résistant', false, false);
+        $strategy0 = new Collaborator();
+        $strategy1 = new Undecided();
 
         $strategies = [$strategy0, $strategy1];
         // Simulate a duel

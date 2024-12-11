@@ -2,6 +2,8 @@
 
 namespace App\Service;
 
+use App\Enum\StrategyChoice;
+
 
 class DuelService
 {
@@ -26,7 +28,7 @@ class DuelService
                     $opposingKey     = ($key == 0) ? 1 : 0;
                     $previousChoices = $choices["strategy$opposingKey"];
                     // Apply the opposing strategy's choices to the current strategy
-                    $strategy->choice($previousChoices);
+                    $strategy->choose($previousChoices);
                 }
                 // Record the choice made for current strategy
                 $choices["strategy$key"][] = $strategy->getChoice();
@@ -51,16 +53,16 @@ class DuelService
             $choice1 = $choices['strategy1'][$i];
 
             // If both strategy chose to collaborate
-            if ($choice0 == $choice1 && $choice0 == true) {
+            if ($choice0 == $choice1 && $choice0 == StrategyChoice::COLLABORATE) {
                 $scores['strategy0'] += 3;
                 $scores['strategy1'] += 3;
                 // If both strategy chose to resist
-            } elseif ($choice0 == $choice1 && $choice0 == false) {
+            } elseif ($choice0 == $choice1 && $choice0 == StrategyChoice::RESIST) {
                 $scores['strategy0'] += 1;
                 $scores['strategy1'] += 1;
                 // If the first strategy chose to collaborate and the second chose to resist
             } elseif ($choice0 != $choice1) {
-                if ($choice0 == true) {
+                if ($choice0 == StrategyChoice::COLLABORATE) {
                     $scores['strategy1'] += 5;
                 } else {
                     $scores['strategy0'] += 5;
