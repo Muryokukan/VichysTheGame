@@ -11,7 +11,7 @@ abstract class Strategy
     private bool   $isThinking;
 
     /**
-     * Method to copy the last choice of an opponent.
+     * Method used by a strategy to make the choice of it's next round
      * @param array $choices Array of StrategyChoice representing choices made by the opponent
      */
     abstract public function choose(array $choices): void;
