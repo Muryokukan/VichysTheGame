@@ -6,6 +6,7 @@ use App\Entity\Strategy;
 
 class TournamentService
 {
+
     private DuelService $duelService;
 
     public function __construct(DuelService $duelService)
