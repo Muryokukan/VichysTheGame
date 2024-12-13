@@ -23,8 +23,12 @@ class TournamentService
         $results     = [];
         $totalScores = array_fill_keys(array_keys($strategies), 0);
 
-        // Conduct duels between each pair of strategies
+        // Shuffle strategies
         $strategyKeys = array_keys($strategies);
+        shuffle($strategyKeys); // Randomize the order of the strategies
+    
+
+        // Conduct duels between each pair of strategies
         foreach ($strategyKeys as $i => $key0) {
             for ($j = $i + 1; $j < count($strategyKeys); $j++) {
                 $key1           = $strategyKeys[$j];
