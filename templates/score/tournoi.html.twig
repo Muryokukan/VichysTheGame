@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Tournament Results
+{% endblock %}
+
+{% block body %}
+	<style>
+		.page-wrapper {
+			margin: 1em auto;
+			max-width: 1200px;
+			width: 80%;
+			font: 18px / 1.5 sans-serif;
+		}
+		table {
+			margin: 20px auto auto;
+			min-width: 1200px;
+			border-collapse: collapse;
+		}
+		th,
+		td {
+			border: 1px solid rgb(1, 0, 0);
+			padding: 8px;
+			text-align: left;
+		}
+		th {
+			background-color: rgb(225, 198, 67);
+		}
+		a {
+			text-decoration: none;
+			color: #FF0000;
+		}
+	</style>
+
+	<div class="page-wrapper">
+		<h1>Tournament Results</h1>
+
+		<h2>Overall Scores</h2>
+		<table>
+			<thead>
+				<tr>
+					<th>Strategy</th>
+					<th>Total Score</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for strategy, score in tournamentResults.totalScores %}
+					<tr>
+						<td>{{ strategy }}</td>
+						<td>{{ score }}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+
+		<h2>Individual Duel Results</h2>
+		{% for duel in tournamentResults.duelResults %}
+			<h3>{{ duel.strategies[0] }}
+				vs
+				{{ duel.strategies[1] }}</h3>
+			<table>
+				<thead>
+					<tr>
+						<th>Round</th>
+						{% for i in 0..9 %}
+							<th>{{ i + 1 }}</th>
+						{% endfor %}
+						<th>Score</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for key, choices in duel.choices %}
+						<tr>
+							<th>{{ duel.strategies[loop.index0] }}</th>
+							{% for choice in choices %}
+								<td>{{ choice.value == "true" ? 'Collaborer' : 'Résister' }}</td>
+							{% endfor %}
+							<td>{{ duel.scores[key] }}</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		{% endfor %}
+	</div>
+	<a href="{{ path('app_home') }}">Retour à l'accueil</a>
+
+{% endblock %}

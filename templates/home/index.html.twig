@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Tournament Results
+{% endblock %}
+
+{% block body %}
+	<style>
+		a {
+			text-decoration: none;
+			color: #FF0000;
+		}
+	</style>
+	<h1>Tournoi de stratégies</h1>
+
+	<h3>Les duels</h3>
+	<p>Le jeu simule un affrontement entre deux joueurs sur dix tours</p>
+
+	<a href="{{ path('app_duel') }}">Résultat du duel</a>
+
+	<h3>Les tournois</h3>
+	<p>Le jeu simule un affrontement entre plusieurs joueurs</p>
+	<p>Chaque joueur recontre chacun des autres joueurs sur dix tours</p>
+
+	<a href="{{ path('app_tournament') }}">Résultat du tournoi</a>
+
+{% endblock %}
