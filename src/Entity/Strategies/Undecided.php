@@ -5,6 +5,10 @@ namespace App\Entity\Strategies;
 use App\Entity\Strategy;
 use App\Enum\StrategyChoice;
 
+/**
+ * Undecided strategy. This strategy chooses its initial choice randomly.
+ * It then continues to randomly choose between resisting and collaborating each round.
+ */
 class Undecided extends Strategy
 {
     public function __construct()

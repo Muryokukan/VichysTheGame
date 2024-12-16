@@ -5,6 +5,9 @@ namespace App\Entity\Strategies;
 use App\Entity\Strategy;
 use App\Enum\StrategyChoice;
 
+/**
+ * Nazi strategy. This strategy always chooses to collaborate.
+ */
 class Nazi extends Strategy {
     public function __construct(){
         parent::__construct('Nazi', StrategyChoice::COLLABORATE, false);
