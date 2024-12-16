@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Strategies\Collaborator;
 use App\Entity\Strategies\Nazi;
+use App\Entity\Strategies\Resentful;
 use App\Entity\Strategies\Resistant;
 use App\Entity\Strategies\Undecided;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,6 +23,7 @@ class HomeController extends AbstractController
             new Undecided(),
             new Nazi(),
             new Resistant(),
+            new Resentful(),
         ];
 
         // Prepare user given strategies for use in the tournamentService

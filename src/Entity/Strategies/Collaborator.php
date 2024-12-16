@@ -7,7 +7,7 @@ use App\Enum\StrategyChoice;
 
 class Collaborator extends Strategy {
     public function __construct(){
-        parent::__construct('Collaborateur', StrategyChoice::COLLABORATE, true);
+        parent::__construct('Collaborateur', StrategyChoice::COLLABORATE, false);
     }
 
     public function choose(array $choices) : void {
