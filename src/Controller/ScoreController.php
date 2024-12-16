@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Strategies\Opportunist;
 use App\Entity\Strategies\Strategist;
 use App\Entity\Strategy;
 use App\Entity\Strategies\Nazi;
@@ -27,6 +28,7 @@ class ScoreController extends AbstractController
             new Nazi(),
             new Resistant(),
             new Strategist(),
+            new Opportunist(),
         ];
 
         // Prepare user given strategies for use in the tournamentService
@@ -66,8 +68,6 @@ class ScoreController extends AbstractController
                 'score'   => $scores[$strategyKey],
             ];
         }
-
-        // dd($results);
 
         return $this->render('score/duel.html.twig', [
             'results' => $results,
