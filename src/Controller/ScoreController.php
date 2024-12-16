@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Strategies\Strategist;
 use App\Entity\Strategy;
 use App\Entity\Strategies\Nazi;
 use App\Service\TournamentService;
@@ -25,6 +26,7 @@ class ScoreController extends AbstractController
             new Undecided(),
             new Nazi(),
             new Resistant(),
+            new Strategist(),
         ];
 
         // Prepare user given strategies for use in the tournamentService
